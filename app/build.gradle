@@ -13,10 +13,16 @@ android {
 
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
+
+        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
 
     lintOptions {
         lintConfig file('../lint.xml')
+    }
+
+    testOptions {
+        execution 'ANDROID_TEST_ORCHESTRATOR'
     }
 
     compileOptions {
@@ -59,4 +65,10 @@ dependencies {
     implementation project(':tokenlibrary')
     implementation project(':tokenservice')
     implementation project(':androidmobileid')
+
+    androidTestUtil "com.android.support.test:orchestrator:${androidSupportTestVersion}"
+    androidTestImplementation "com.android.support.test:runner:${androidSupportTestVersion}"
+    androidTestImplementation "com.android.support.test:rules:${androidSupportTestVersion}"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:${espressoVersion}"
+    androidTestImplementation "com.google.truth:truth:${truthVersion}"
 }

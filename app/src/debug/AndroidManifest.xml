@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ee.ria.DigiDoc">
+
+    <application>
+
+        <activity android:name=".android.ViewTestActivity"
+            android:theme="@style/Theme.Application" />
+
+    </application>
+
+</manifest>

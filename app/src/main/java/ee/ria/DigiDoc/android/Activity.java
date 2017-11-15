@@ -10,7 +10,7 @@ import ee.ria.DigiDoc.R;
 import ee.ria.DigiDoc.android.main.HomeScreen;
 import ee.ria.DigiDoc.android.utils.conductor.ConductorNavigator;
 
-public final class Activity extends AppCompatActivity {
+public class Activity extends AppCompatActivity {
 
     @Inject ConductorNavigator conductorNavigator;
 
