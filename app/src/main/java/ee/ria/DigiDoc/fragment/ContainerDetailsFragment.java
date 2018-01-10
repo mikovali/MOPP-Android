@@ -19,6 +19,7 @@
 
 package ee.ria.DigiDoc.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.ClipData;
@@ -374,7 +375,7 @@ public class ContainerDetailsFragment extends Fragment implements AddedAdesSigna
 
     private boolean isInternetAccessAvailable() {
         ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        @SuppressLint("MissingPermission") NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 
