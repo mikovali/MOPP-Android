@@ -12,9 +12,26 @@ android {
         versionName appVersionName
 
         multiDexEnabled true
-        vectorDrawables.useSupportLibrary = true
 
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file('../debug.keystore')
+        }
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix '.debug'
+        }
+        develop {
+            debuggable true
+            applicationIdSuffix '.develop'
+            signingConfig signingConfigs.debug
+            matchingFallbacks = ['debug']
+        }
     }
 
     lintOptions {
@@ -37,10 +54,13 @@ dependencies {
     implementation "com.android.support:appcompat-v7:${androidSupportLibraryVersion}"
     implementation "com.android.support:design:${androidSupportLibraryVersion}"
     implementation "com.android.support:recyclerview-v7:${androidSupportLibraryVersion}"
-    implementation "com.android.support:support-vector-drawable:${androidSupportLibraryVersion}"
+    implementation "com.android.support:cardview-v7:${androidSupportLibraryVersion}"
 
     implementation "com.google.firebase:firebase-appindexing:${firebaseVersion}"
 
+    implementation "com.takisoft.fix:preference-v7:${preferenceV7FixVersion}"
+
+    implementation "com.google.guava:guava:${guavaVersion}"
     implementation "commons-io:commons-io:${commonsIoVersion}"
 
     implementation "com.jakewharton.timber:timber:${timberVersion}"
@@ -59,12 +79,23 @@ dependencies {
 
     implementation "io.reactivex.rxjava2:rxjava:${rxJavaVersion}"
     implementation "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}"
+    implementation "com.jakewharton.rxbinding2:rxbinding:${rxBindingVersion}"
+    implementation "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:${rxBindingVersion}"
     implementation "com.jakewharton.rxbinding2:rxbinding-design:${rxBindingVersion}"
+
+    implementation "com.google.auto.value:auto-value:${autoValueVersion}"
+    annotationProcessor "com.google.auto.value:auto-value:${autoValueVersion}"
+    annotationProcessor "com.ryanharter.auto.value:auto-value-parcel:${autoValueParcelVersion}"
+
+    implementation "com.jakewharton.threetenabp:threetenabp:${threetenabpVersion}"
 
     implementation project(':scardcomlibrary')
     implementation project(':tokenlibrary')
     implementation project(':tokenservice')
     implementation project(':androidmobileid')
+
+    testAnnotationProcessor "com.google.auto.value:auto-value:${autoValueVersion}"
+    testImplementation "junit:junit:${junitVersion}"
 
     androidTestUtil "com.android.support.test:orchestrator:${androidSupportTestVersion}"
     androidTestImplementation "com.android.support.test:runner:${androidSupportTestVersion}"

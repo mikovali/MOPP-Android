@@ -1,5 +1,6 @@
 package ee.ria.DigiDoc.android;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -7,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import javax.inject.Inject;
 
 import ee.ria.DigiDoc.R;
-import ee.ria.DigiDoc.android.main.HomeScreen;
+import ee.ria.DigiDoc.android.main.home.HomeScreen;
 import ee.ria.DigiDoc.android.utils.conductor.ConductorNavigator;
 
 public class Activity extends AppCompatActivity {
@@ -31,5 +32,11 @@ public class Activity extends AppCompatActivity {
         if (!conductorNavigator.handleBack()) {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        conductorNavigator.onActivityResult(requestCode, resultCode, data);
     }
 }

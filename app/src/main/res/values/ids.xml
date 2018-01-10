@@ -4,6 +4,8 @@
     <!-- General -->
     <item type="id" name="appBar" />
     <item type="id" name="toolbar" />
+    <item type="id" name="activityIndicator" />
+    <item type="id" name="activityOverlay" />
 
     <!-- Main Home -->
     <item type="id" name="mainHomeScreen" />
@@ -14,9 +16,52 @@
     <item type="id" name="mainHomeNavigationCrypto" />
     <item type="id" name="mainHomeNavigationEID" />
 
+    <item type="id" name="mainHomeToolbarLogo" />
+    <item type="id" name="mainHomeToolbarOverflow" />
+    <item type="id" name="mainHomeToolbarDocuments" />
+    <item type="id" name="mainHomeToolbarFirstRun" />
+    <item type="id" name="mainHomeToolbarSettings" />
+    <item type="id" name="mainHomeToolbarHelp" />
+    <item type="id" name="mainHomeToolbarAbout" />
+
+    <!-- Main Settings -->
+    <item type="id" name="mainSettingsScreen" />
+    <item type="id" name="mainSettingsFragment" />
+
     <!-- Signature Home -->
     <item type="id" name="signatureHomeScreen" />
     <item type="id" name="signatureHomeCreateButton" />
+
+    <!-- Signature Create -->
+    <item type="id" name="signatureCreateScreen" />
+    <item type="id" name="signatureCreateProgress" />
+
+    <!-- Signature Update -->
+    <item type="id" name="signatureUpdateScreen" />
+    <item type="id" name="signatureUpdateError" />
+    <item type="id" name="signatureUpdateSignaturesValidity" />
+    <item type="id" name="signatureUpdateList" />
+    <item type="id" name="signatureUpdateListSubheadTitle" />
+    <item type="id" name="signatureUpdateListSubheadButton" />
+    <item type="id" name="signatureUpdateListDocumentIcon" />
+    <item type="id" name="signatureUpdateListDocumentName" />
+    <item type="id" name="signatureUpdateListDocumentSize" />
+    <item type="id" name="signatureUpdateListDocumentRemoveButton" />
+    <item type="id" name="signatureUpdateListSignatureValidity" />
+    <item type="id" name="signatureUpdateListSignatureName" />
+    <item type="id" name="signatureUpdateListSignatureCreatedAt" />
+    <item type="id" name="signatureUpdateListSignatureRemoveButton" />
+    <item type="id" name="signatureUpdateMobileIdContainer" />
+    <item type="id" name="signatureUpdateMobileIdStatus" />
+    <item type="id" name="signatureUpdateMobileIdChallenge" />
+
+    <!-- Signature Add -->
+    <item type="id" name="signatureAdd" />
+    <item type="id" name="signatureAddPhoneNoLabel" />
+    <item type="id" name="signatureAddPhoneNo" />
+    <item type="id" name="signatureAddPersonalCodeLabel" />
+    <item type="id" name="signatureAddPersonalCode" />
+    <item type="id" name="signatureAddRememberMe" />
 
     <!-- Crypto Home -->
     <item type="id" name="cryptoHomeScreen" />

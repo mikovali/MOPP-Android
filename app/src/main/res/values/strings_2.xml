@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation"> <!-- remove when translations are available -->
+
+    <string name="back">Back</string>
+    <string name="close">Close</string>
+
+    <!-- Main Home -->
+    <string name="main_home_navigation_signature">Signing</string>
+    <string name="main_home_navigation_crypto">Crypto</string>
+    <string name="main_home_navigation_eid">My eID</string>
+
+    <string name="main_home_toolbar_overflow">More options</string>
+    <string name="main_home_toolbar_documents">Documents</string>
+    <string name="main_home_toolbar_first_run">First run</string>
+    <string name="main_home_toolbar_settings">Settings</string>
+    <string name="main_home_toolbar_help">Help</string>
+    <string name="main_home_toolbar_about">About</string>
+
+    <!-- Main Settings -->
+    <string name="main_settings_title">Settings</string>
+
+    <string name="main_settings_phone_no_title">Mobile-ID phone number</string>
+    <string name="main_settings_personal_code_title">Personal code</string>
+    <string name="main_settings_role_title">Role</string>
+    <string name="main_settings_city_title">City</string>
+    <string name="main_settings_county_title">County</string>
+    <string name="main_settings_country_title">Country</string>
+    <string name="main_settings_postal_code_title">Postal code</string>
+    <string name="main_settings_signature_profile_title">Default file type</string>
+
+    <!-- Signature Home -->
+    <string name="signature_home_create_text">Choose a file to sign or check</string>
+    <string name="signature_home_create_button">Choose file</string>
+
+    <!-- Signature Create -->
+    <string name="signature_create_error">Could not load selected files</string>
+
+    <!-- Signature Update -->
+    <string name="signature_update_documents_title">Documents</string>
+    <string name="signature_update_documents_button">Add documents</string>
+    <string name="signature_update_signatures_title">Signatures</string>
+    <string name="signature_update_signatures_button">Add signature</string>
+    <string name="signature_update_document_remove_button">Remove document</string>
+    <string name="signature_update_document_remove_confirmation_message">Remove document from container?</string>
+    <string name="signature_update_document_type_file">File</string>
+    <string name="signature_update_signature_valid">Signature is valid</string>
+    <string name="signature_update_signature_invalid">Signature is not valid</string>
+    <string name="signature_update_signatures_invalid">Some signatures are invalid</string>
+    <string name="signature_update_signature_remove_button">Remove signature</string>
+    <string name="signature_update_signature_remove_confirmation_message">Remove signature from container?</string>
+    <string name="signature_update_signature_remove_error">Could not remove signature from the container</string>
+
+    <string name="signature_update_load_container_error">Could not open signature container</string>
+    <string name="signature_update_add_documents_error_exists">File already exists in the container</string>
+    <string name="signature_update_documents_remove_error_container_empty">Can\'t remove all documents from container</string>
+    <string name="signature_update_signature_summary_secondary_empty">No signatures added to this container yet</string>
+    <string name="signature_update_signature_summary_secondary_valid">All signatures are valid</string>
+
+    <!-- Signature Add -->
+    <string name="signature_add_title">Sign via Mobile-ID</string>
+    <string name="signature_add_phone_no">Phone number</string>
+    <string name="signature_add_personal_code">Personal code</string>
+    <string name="signature_add_remember_me">Remember me</string>
+
+    <!-- Crypto Home -->
+    <string name="crypto_home_create_text">Choose a file to crypt or decrypt</string>
+    <string name="crypto_home_create_button">Choose file</string>
+
+    <!-- EID Home -->
+    <string name="eid_home_text">Sign in to see your eID information</string>
+    <string name="eid_home_mobile_id_button">Sign in via Mobile-ID</string>
+    <string name="eid_home_id_card_button">Sign in via ID card</string>
+
+</resources>

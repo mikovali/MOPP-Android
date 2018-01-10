@@ -11,11 +11,18 @@ import android.view.ViewGroup;
 
 import com.bluelinelabs.conductor.Controller;
 
+import ee.ria.DigiDoc.R;
+import ee.ria.DigiDoc.android.Application;
+import ee.ria.DigiDoc.android.utils.mvi.MviViewModelProvider;
 import ee.ria.DigiDoc.android.utils.navigation.Screen;
+
+import static android.support.v4.content.res.ResourcesCompat.getColor;
 
 public abstract class ConductorScreen extends Controller implements Screen {
 
     @IdRes private final int id;
+
+    private MviViewModelProvider viewModelProvider;
 
     protected ConductorScreen(@IdRes int id) {
         this(id, null);
@@ -33,6 +40,19 @@ public abstract class ConductorScreen extends Controller implements Screen {
     protected View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container) {
         View view = createView(container.getContext());
         view.setId(id);
+        view.setBackgroundColor(getColor(container.getResources(), R.color.windowBackground, null));
         return view;
+    }
+
+    @Override
+    protected void onContextAvailable(@NonNull Context context) {
+        super.onContextAvailable(context);
+        if (viewModelProvider == null) {
+            viewModelProvider = Application.component(context).viewModelProvider();
+        }
+    }
+
+    MviViewModelProvider getViewModelProvider() {
+        return viewModelProvider;
     }
 }
