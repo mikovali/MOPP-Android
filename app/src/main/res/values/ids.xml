@@ -26,6 +26,7 @@
     <item type="id" name="mainHomeMenuRecent" />
     <item type="id" name="mainHomeMenuSettings" />
     <item type="id" name="mainHomeMenuAbout" />
+    <item type="id" name="mainHomeMenuDiagnostics" />
 
     <!-- Main Help -->
     <item type="id" name="mainHelpScreen" />

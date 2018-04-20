@@ -8,6 +8,7 @@ import ee.ria.DigiDoc.R;
 import ee.ria.DigiDoc.android.crypto.CryptoHomeScreen;
 import ee.ria.DigiDoc.android.eid.EIDHomeScreen;
 import ee.ria.DigiDoc.android.main.about.AboutScreen;
+import ee.ria.DigiDoc.android.main.diagnostics.DiagnosticsScreen;
 import ee.ria.DigiDoc.android.main.help.HelpScreen;
 import ee.ria.DigiDoc.android.main.settings.SettingsScreen;
 import ee.ria.DigiDoc.android.signature.home.SignatureHomeScreen;
@@ -75,6 +76,8 @@ final class Processor implements ObservableTransformer<Action, Result> {
                 return SettingsScreen.create();
             case R.id.mainHomeMenuAbout:
                 return AboutScreen.create();
+            case R.id.mainHomeMenuDiagnostics:
+                return DiagnosticsScreen.create();
             default:
                 throw new IllegalArgumentException("Unknown menu item: " + item);
         }
