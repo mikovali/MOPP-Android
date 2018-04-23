@@ -54,15 +54,15 @@ public class DiagnosticsView extends ScrollView {
         super.onDetachedFromWindow();
     }
 
-    public String getAppVersion(){
+    private String getAppVersion(){
         return BuildConfig.VERSION_NAME;
     }
 
-    public String getAndroidVersion(){
+    private String getAndroidVersion(){
         return "Android " + Build.VERSION.RELEASE;
     }
 
-    public String getLibDigiDocVersion(){
+    private String getLibDigiDocVersion(){
         return digidoc.appInfo() + " " + digidoc.version();
     }
 }
