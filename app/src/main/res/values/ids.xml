@@ -35,6 +35,12 @@
     <item type="id" name="mainSettingsScreen" />
     <item type="id" name="mainSettingsFragment" />
 
+    <!-- Main Diagnostics -->
+    <item type="id" name="eidAboutApplicationVersion"/>
+    <item type="id" name="eidAboutAndroidVersion"/>
+    <item type="id" name="eidAboutLibDocVersion"/>
+
+
     <!-- Main About -->
     <item type="id" name="mainAboutScreen" />
 
