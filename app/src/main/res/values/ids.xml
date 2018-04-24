@@ -28,9 +28,6 @@
     <item type="id" name="mainHomeMenuAbout" />
     <item type="id" name="mainHomeMenuDiagnostics" />
 
-    <!-- Main Help -->
-    <item type="id" name="mainHelpScreen" />
-
     <!-- Main Settings -->
     <item type="id" name="mainSettingsScreen" />
     <item type="id" name="mainSettingsFragment" />
