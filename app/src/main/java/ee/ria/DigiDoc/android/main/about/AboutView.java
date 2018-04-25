@@ -14,7 +14,7 @@ import ee.ria.DigiDoc.android.utils.ViewDisposables;
 import ee.ria.DigiDoc.android.utils.navigator.Navigator;
 import ee.ria.DigiDoc.android.utils.navigator.Transaction;
 
-public class AboutView extends ScrollView {
+public final class AboutView extends ScrollView {
 
     private final Toolbar toolbarView;
 
