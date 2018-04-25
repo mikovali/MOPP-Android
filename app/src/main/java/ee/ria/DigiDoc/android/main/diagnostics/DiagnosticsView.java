@@ -30,6 +30,7 @@ public class DiagnosticsView extends ScrollView {
         toolbarView = findViewById(R.id.toolbar);
         navigator = Application.component(context).navigator();
         disposables = new ViewDisposables();
+
         TextView applicationVersion = findViewById(R.id.mainDiagnosticsApplicationVersion);
         TextView androidVersion = findViewById(R.id.mainDiagnosticsAndroidVersion);
         TextView libDocVersion = findViewById(R.id.mainDiagnosticsLibdigidocppVersion);
