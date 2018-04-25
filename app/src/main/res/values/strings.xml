@@ -243,4 +243,8 @@
     <string name="user_certificate_expired">Your mobile signing certificate is expired</string>
     <string name="message_exceeds_volume_limit">Too many datafiles in container</string>
     <string name="simultaneous_requests_limit_exceeded">Simultaneous requests limit exceeded</string>
+    <string name="application_version">Application version:\u0020</string>
+    <string name="operating_system">Operating system:\u0020</string>
+    <string name="libraries">Libraries</string>
+    <string name="diagnostics">Diagnostics</string>
 </resources>

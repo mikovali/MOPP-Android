@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/material_content_edge_margin_horizontal"
+    android:background="@color/material_color_white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            style="@style/MaterialTypography.Dense.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/application_version"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/eidAboutApplicationVersion"
+            style="@style/MaterialTypography.Dense.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            style="@style/MaterialTypography.Dense.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/operating_system"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/eidAboutAndroidVersion"
+            style="@style/MaterialTypography.Dense.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <TextView
+        style="@style/MaterialTypography.Dense.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/material_stepper_padding_top"
+        android:text="@string/libraries"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/eidAboutLibDocVersion"
+        style="@style/MaterialTypography.Dense.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</LinearLayout>
