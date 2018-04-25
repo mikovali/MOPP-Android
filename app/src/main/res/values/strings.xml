@@ -243,12 +243,4 @@
     <string name="user_certificate_expired">Your mobile signing certificate is expired</string>
     <string name="message_exceeds_volume_limit">Too many datafiles in container</string>
     <string name="simultaneous_requests_limit_exceeded">Simultaneous requests limit exceeded</string>
-    <string name="ria_digidoc_version">RIA DigiDoc version 2.0.0.100</string>
-    <string name="software_developed_by">ID software is developed by Estonian Information System Authority</string>
-    <string name="contact_information">In case of questions contact the ID help-line by e-mail abi@id.ee or call 1777 within Estonia, (+372) 677 3377 abroad.</string>
-    <string name="licenses_title">Licenses and components</string>
-    <string name="name_of_external_component_or_library">Name of external component or library</string>
-    <string name="name_and_version_of_the_license">Name and version of the license</string>
-    <string name="https_url_to_component_license_page">https://url.to.component.license.page</string>
-    <string name="info">Info</string>
 </resources>
