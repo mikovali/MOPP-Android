@@ -47,7 +47,7 @@ public final class AboutView extends ScrollView {
 
     public AboutView(Context context) {
         super(context);
-        inflate(context, R.layout.about_screen, this);
+        inflate(context, R.layout.main_about, this);
         toolbarView = findViewById(R.id.toolbar);
         navigator = Application.component(context).navigator();
         disposables = new ViewDisposables();
