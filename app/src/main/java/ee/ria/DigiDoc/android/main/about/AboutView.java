@@ -7,8 +7,6 @@ import android.widget.TextView;
 
 import com.jakewharton.rxbinding2.support.v7.widget.RxToolbar;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import ee.ria.DigiDoc.BuildConfig;
 import ee.ria.DigiDoc.R;
 import ee.ria.DigiDoc.android.Application;
@@ -24,28 +22,28 @@ public class AboutView extends ScrollView {
 
     private final ViewDisposables disposables;
 
-    @BindView(R.id.mainAboutRiaDigiDocVersionTitle) TextView riaDigiDocVersionTitle;
-    @BindView(R.id.mainAboutPreferenceV7FixVersionTitle) TextView preferenceV7FixVersionTitle;
-    @BindView(R.id.mainAboutGuavaVersionTitle) TextView guavaVersionTitle;
-    @BindView(R.id.mainAboutCommonsIoVersionTitle) TextView commonsIoVersionTitle;
-    @BindView(R.id.mainAboutOkioVersionTitle) TextView okioVersionTitle;
-    @BindView(R.id.mainAboutTimberVersionTitle) TextView timberVersionTitle;
-    @BindView(R.id.mainAboutButterknifeVersionTitle) TextView butterknifeVersionTitle;
-    @BindView(R.id.mainAboutOkHttpVersionTitle) TextView okHttpVersionTitle;
-    @BindView(R.id.mainAboutRetrofitVersionTitle) TextView retrofitVersionTitle;
-    @BindView(R.id.mainAboutSpongyCastleVersionTitle) TextView spongyCastleVersionTitle;
-    @BindView(R.id.mainAboutMaterialValuesVersionTitle) TextView materialValuesVersionTitle;
-    @BindView(R.id.mainAboutDaggerVersionTitle) TextView daggerVersionTitle;
-    @BindView(R.id.mainAboutConductorVersionTitle) TextView conductorVersionTitle;
-    @BindView(R.id.mainAboutRxJavaVersionTitle) TextView rxJavaVersionTitle;
-    @BindView(R.id.mainAboutRxAndroidVersionTitle) TextView rxAndroidVersionTitle;
-    @BindView(R.id.mainAboutRxBindingVersionTitle) TextView rxBindingVersionTitle;
-    @BindView(R.id.mainAboutAutoValueVersionTitle) TextView autoValueVersionTitle;
-    @BindView(R.id.mainAboutAutoValueParcelVersionTitle) TextView autoValueParcelVersionTitle;
-    @BindView(R.id.mainAboutThreeTenAbpVersionTitle) TextView threeTenAbpVersionTitle;
-    @BindView(R.id.mainAboutExpandableLayoutVersionTitle) TextView expandableLayoutVersionTitle;
-    @BindView(R.id.mainAboutJunitVersionTitle) TextView junitVersionTitle;
-    @BindView(R.id.mainAboutTruthVersionTitle) TextView truthVersionTitle;
+    private TextView riaDigiDocVersionTitle;
+    private TextView preferenceV7FixVersionTitle;
+    private TextView guavaVersionTitle;
+    private TextView commonsIoVersionTitle;
+    private TextView okioVersionTitle;
+    private TextView timberVersionTitle;
+    private TextView butterknifeVersionTitle;
+    private TextView okHttpVersionTitle;
+    private TextView retrofitVersionTitle;
+    private TextView spongyCastleVersionTitle;
+    private TextView materialValuesVersionTitle;
+    private TextView daggerVersionTitle;
+    private TextView conductorVersionTitle;
+    private TextView rxJavaVersionTitle;
+    private TextView rxAndroidVersionTitle;
+    private TextView rxBindingVersionTitle;
+    private TextView autoValueVersionTitle;
+    private TextView autoValueParcelVersionTitle;
+    private TextView threeTenAbpVersionTitle;
+    private TextView expandableLayoutVersionTitle;
+    private TextView junitVersionTitle;
+    private TextView truthVersionTitle;
 
     public AboutView(Context context) {
         super(context);
@@ -53,7 +51,33 @@ public class AboutView extends ScrollView {
         toolbarView = findViewById(R.id.toolbar);
         navigator = Application.component(context).navigator();
         disposables = new ViewDisposables();
-        ButterKnife.bind(this);
+
+        riaDigiDocVersionTitle = findViewById(R.id.mainAboutRiaDigiDocVersionTitle);
+        preferenceV7FixVersionTitle =
+                findViewById(R.id.mainAboutPreferenceV7FixVersionTitle);
+        guavaVersionTitle = findViewById(R.id.mainAboutGuavaVersionTitle);
+        commonsIoVersionTitle = findViewById(R.id.mainAboutCommonsIoVersionTitle);
+        okioVersionTitle = findViewById(R.id.mainAboutOkioVersionTitle);
+        timberVersionTitle = findViewById(R.id.mainAboutTimberVersionTitle);
+        butterknifeVersionTitle = findViewById(R.id.mainAboutButterknifeVersionTitle);
+        okHttpVersionTitle = findViewById(R.id.mainAboutOkHttpVersionTitle);
+        retrofitVersionTitle = findViewById(R.id.mainAboutRetrofitVersionTitle);
+        spongyCastleVersionTitle = findViewById(R.id.mainAboutSpongyCastleVersionTitle);
+        materialValuesVersionTitle =
+                findViewById(R.id.mainAboutMaterialValuesVersionTitle);
+        daggerVersionTitle = findViewById(R.id.mainAboutDaggerVersionTitle);
+        conductorVersionTitle = findViewById(R.id.mainAboutConductorVersionTitle);
+        rxJavaVersionTitle = findViewById(R.id.mainAboutRxJavaVersionTitle);
+        rxAndroidVersionTitle = findViewById(R.id.mainAboutRxAndroidVersionTitle);
+        rxBindingVersionTitle = findViewById(R.id.mainAboutRxBindingVersionTitle);
+        autoValueVersionTitle = findViewById(R.id.mainAboutAutoValueVersionTitle);
+        autoValueParcelVersionTitle =
+                findViewById(R.id.mainAboutAutoValueParcelVersionTitle);
+        threeTenAbpVersionTitle = findViewById(R.id.mainAboutThreeTenAbpVersionTitle);
+        expandableLayoutVersionTitle =
+                findViewById(R.id.mainAboutExpandableLayoutVersionTitle);
+        junitVersionTitle = findViewById(R.id.mainAboutJunitVersionTitle);
+        truthVersionTitle = findViewById(R.id.mainAboutTruthVersionTitle);
 
         appendTitleVersions();
     }

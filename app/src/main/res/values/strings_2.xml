@@ -18,7 +18,7 @@
     <string name="main_home_menu_about">About</string>
 
     <!-- Main About -->
-    <string  name="main_about_title">Info</string>
+    <string name="main_about_title">Info</string>
     <string name="main_about_ria_digidoc_version_title">RIA DigiDoc</string>
     <string name="main_about_software_developed_by_title">ID software is developed by Estonian Information System Authority</string>
     <string name="main_about_contact_information_title">In case of questions contact the ID help-line by e-mail abi@id.ee or call 1777 within Estonia, (+372) 677 3377 abroad.</string>
@@ -35,9 +35,9 @@
     <string name="main_about_material_values_title">Material Values</string>
     <string name="main_about_dagger_title">Google Dagger</string>
     <string name="main_about_conductor_title">BlueLine Labs Conductor</string>
-    <string name="main_about_rxjava_title">ReactiveX RxJava</string>
-    <string name="main_about_rxandroid_title">ReactiveX RxAndroid</string>
-    <string name="main_about_rxbinding_title">ReactiveX RxBinding</string>
+    <string name="main_about_rxjava_title">RxJava</string>
+    <string name="main_about_rxandroid_title">RxAndroid</string>
+    <string name="main_about_rxbinding_title">RxBinding</string>
     <string name="main_about_autovalue_title">Google AutoValue</string>
     <string name="main_about_autovalue_parcel_title">AutoValue Parcel</string>
     <string name="main_about_threetenabp_title">ThreeTenAbp</string>
