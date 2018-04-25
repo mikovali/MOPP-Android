@@ -32,6 +32,11 @@
     <item type="id" name="mainSettingsScreen" />
     <item type="id" name="mainSettingsFragment" />
 
+    <!-- Main Diagnostics -->
+    <item type="id" name="mainDiagnosticsApplicationVersion" />
+    <item type="id" name="mainDiagnosticsAndroidVersion" />
+    <item type="id" name="mainDiagnosticsLibdigidocppVersion" />
+
     <!-- Main About -->
     <item type="id" name="mainAboutScreen" />
 

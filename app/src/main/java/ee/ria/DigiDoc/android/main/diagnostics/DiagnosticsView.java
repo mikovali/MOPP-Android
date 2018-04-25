@@ -6,8 +6,6 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.jakewharton.rxbinding2.support.v7.widget.RxToolbar;
-
 import ee.ria.DigiDoc.BuildConfig;
 import ee.ria.DigiDoc.R;
 import ee.ria.DigiDoc.android.Application;
@@ -15,6 +13,8 @@ import ee.ria.DigiDoc.android.utils.ViewDisposables;
 import ee.ria.DigiDoc.android.utils.navigator.Navigator;
 import ee.ria.DigiDoc.android.utils.navigator.Transaction;
 import ee.ria.libdigidocpp.digidoc;
+
+import static com.jakewharton.rxbinding2.support.v7.widget.RxToolbar.navigationClicks;
 
 public class DiagnosticsView extends ScrollView {
 
@@ -30,10 +30,9 @@ public class DiagnosticsView extends ScrollView {
         toolbarView = findViewById(R.id.toolbar);
         navigator = Application.component(context).navigator();
         disposables = new ViewDisposables();
-
-        TextView applicationVersion = findViewById(R.id.eidAboutApplicationVersion);
-        TextView androidVersion = findViewById(R.id.eidAboutAndroidVersion);
-        TextView libDocVersion = findViewById(R.id.eidAboutLibDocVersion);
+        TextView applicationVersion = findViewById(R.id.mainDiagnosticsApplicationVersion);
+        TextView androidVersion = findViewById(R.id.mainDiagnosticsAndroidVersion);
+        TextView libDocVersion = findViewById(R.id.mainDiagnosticsLibdigidocppVersion);
 
         applicationVersion.setText(getAppVersion());
         androidVersion.setText(getAndroidVersion());
@@ -44,7 +43,7 @@ public class DiagnosticsView extends ScrollView {
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
         disposables.attach();
-        disposables.add(RxToolbar.navigationClicks(toolbarView).subscribe(o ->
+        disposables.add(navigationClicks(toolbarView).subscribe(o ->
                 navigator.execute(Transaction.pop())));
     }
 
@@ -54,15 +53,15 @@ public class DiagnosticsView extends ScrollView {
         super.onDetachedFromWindow();
     }
 
-    public String getAppVersion(){
+    private static String getAppVersion(){
         return BuildConfig.VERSION_NAME;
     }
 
-    public String getAndroidVersion(){
+    private static String getAndroidVersion(){
         return "Android " + Build.VERSION.RELEASE;
     }
 
-    public String getLibDigiDocVersion(){
+    private static String getLibDigiDocVersion(){
         return digidoc.appInfo() + " " + digidoc.version();
     }
 }
