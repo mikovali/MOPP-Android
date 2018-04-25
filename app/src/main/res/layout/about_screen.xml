@@ -38,7 +38,7 @@
                 android:layout_gravity="center_horizontal"
                 android:paddingTop="@dimen/material_card_actions_row_padding"
                 android:contentDescription="@android:string/unknownName"
-                android:src="@drawable/about_logo_estonian" />
+                android:src="@drawable/main_about_fonds" />
 
             <TextView
                 android:id="@id/mainAboutRiaDigiDocVersionTitle"
