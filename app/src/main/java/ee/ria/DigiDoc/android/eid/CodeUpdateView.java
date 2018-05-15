@@ -74,7 +74,7 @@ public final class CodeUpdateView extends CoordinatorLayout {
         successMessageView.setText(action.successMessageRes());
         textView.itemsRes(action.textRowsRes());
         currentLabelView.setHint(getResources().getString(action.currentRes()));
-        newLabelView.setHint(getResources().getString(action.newRes()));
+        newLabelView.setHint(getResources().getString(action.newRes(), action.newMinLength()));
         repeatLabelView.setHint(getResources().getString(action.repeatRes()));
         positiveButton.setText(action.positiveButtonRes());
         activityOverlayView.setVisibility(state.equals(State.ACTIVE) ? VISIBLE : GONE);
@@ -83,10 +83,7 @@ public final class CodeUpdateView extends CoordinatorLayout {
         successMessageView.setVisibility(successMessageVisible ? VISIBLE : GONE);
 
         if (state.equals(State.CLEAR)) {
-            currentView.setText(null);
-            newView.setText(null);
-            repeatView.setText(null);
-            hideSoftKeyboard(this);
+            clear();
         }
 
         if (response == null) {
@@ -105,8 +102,14 @@ public final class CodeUpdateView extends CoordinatorLayout {
                         getResources().getString(action.currentMinLengthErrorRes(),
                                 ((CodeMinLengthError) currentError).minLength()));
             } else if (currentError instanceof CodeInvalidError) {
-                currentLabelView.setError(getResources().getString(action.currentInvalidErrorRes(),
-                        ((CodeInvalidError) currentError).retryCount()));
+                int retryCount = ((CodeInvalidError) currentError).retryCount();
+                if (retryCount == 1) {
+                    currentLabelView.setError(getResources().getString(
+                            action.currentInvalidFinalErrorRes()));
+                } else {
+                    currentLabelView.setError(getResources().getString(
+                            action.currentInvalidErrorRes(), retryCount));
+                }
             }
 
             if (newError == null) {
@@ -130,6 +133,13 @@ public final class CodeUpdateView extends CoordinatorLayout {
                 repeatLabelView.setError(getResources().getString(action.repeatMismatchErrorRes()));
             }
         }
+    }
+
+    public void clear() {
+        currentView.setText(null);
+        newView.setText(null);
+        repeatView.setText(null);
+        hideSoftKeyboard(this);
     }
 
     public Observable<Object> closes() {

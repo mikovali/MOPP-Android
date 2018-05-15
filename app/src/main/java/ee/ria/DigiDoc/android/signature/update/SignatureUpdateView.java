@@ -17,6 +17,7 @@ import java.io.File;
 
 import ee.ria.DigiDoc.R;
 import ee.ria.DigiDoc.android.Application;
+import ee.ria.DigiDoc.android.model.mobileid.MobileIdStatusMessages;
 import ee.ria.DigiDoc.android.signature.update.mobileid.MobileIdResponse;
 import ee.ria.DigiDoc.android.utils.ViewDisposables;
 import ee.ria.DigiDoc.android.utils.ViewSavedState;
@@ -24,8 +25,7 @@ import ee.ria.DigiDoc.android.utils.mvi.MviView;
 import ee.ria.DigiDoc.android.utils.navigator.Navigator;
 import ee.ria.DigiDoc.android.utils.navigator.Transaction;
 import ee.ria.DigiDoc.android.utils.widget.ConfirmationDialog;
-import ee.ria.DigiDoc.mid.MobileSignStatusMessageSource;
-import ee.ria.mopp.androidmobileid.dto.response.GetMobileCreateSignatureStatusResponse;
+import ee.ria.mopp.androidmobileid.dto.response.GetMobileCreateSignatureStatusResponse.ProcessStatus;
 import ee.ria.mopplib.data.DataFile;
 import ee.ria.mopplib.data.Signature;
 import ee.ria.mopplib.data.SignedContainer;
@@ -51,6 +51,7 @@ public final class SignatureUpdateView extends LinearLayout implements MviView<I
     private final boolean signatureAddSuccessMessageVisible;
 
     private final Toolbar toolbarView;
+    private final NameUpdateDialog nameUpdateDialog;
     private final RecyclerView listView;
     private final SignatureUpdateAdapter adapter;
     private final View activityIndicatorView;
@@ -85,8 +86,6 @@ public final class SignatureUpdateView extends LinearLayout implements MviView<I
     @Nullable private DataFile documentRemoveConfirmation;
     @Nullable private Signature signatureRemoveConfirmation;
 
-    private final MobileSignStatusMessageSource statusMessageSource;
-
     public SignatureUpdateView(Context context, String screenId, boolean isExistingContainer,
                                boolean isNestedContainer, File containerFile,
                                boolean signatureAddVisible,
@@ -104,6 +103,7 @@ public final class SignatureUpdateView extends LinearLayout implements MviView<I
         setOrientation(VERTICAL);
         inflate(context, R.layout.signature_update, this);
         toolbarView = findViewById(R.id.toolbar);
+        nameUpdateDialog = new NameUpdateDialog(context);
         listView = findViewById(R.id.signatureUpdateList);
         activityIndicatorView = findViewById(R.id.activityIndicator);
         activityOverlayView = findViewById(R.id.activityOverlay);
@@ -127,22 +127,20 @@ public final class SignatureUpdateView extends LinearLayout implements MviView<I
         signatureAddDialog = new SignatureUpdateSignatureAddDialog(context);
         signatureAddView = signatureAddDialog.view();
         resetSignatureAddDialog();
-
-        statusMessageSource = new MobileSignStatusMessageSource(context.getResources());
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public Observable<Intent> intents() {
-        return Observable.mergeArray(initialIntent(), addDocumentsIntent(), openDocumentIntent(),
-                documentRemoveIntent(), signatureRemoveIntent(), signatureAddIntent(),
-                sendIntent());
+        return Observable.mergeArray(initialIntent(), nameUpdateIntent(), addDocumentsIntent(),
+                openDocumentIntent(), documentRemoveIntent(), signatureRemoveIntent(),
+                signatureAddIntent(), sendIntent());
     }
 
     @Override
     public void render(ViewState state) {
         if (state.containerLoadError() != null) {
-            Toast.makeText(getContext(), R.string.signature_update_load_container_error,
+            Toast.makeText(getContext(), R.string.signature_update_container_load_error,
                     Toast.LENGTH_LONG).show();
             navigator.execute(Transaction.pop());
             return;
@@ -153,6 +151,9 @@ public final class SignatureUpdateView extends LinearLayout implements MviView<I
             documentOpenIntentSubject.onNext(Intent.DocumentOpenIntent.clear());
             return;
         }
+
+        nameUpdateDialog.render(state.nameUpdateShowing(), state.nameUpdateName(),
+                state.nameUpdateError(), state.container());
 
         toolbarView.setTitle(isExistingContainer
                 ? R.string.signature_update_title_existing
@@ -207,13 +208,11 @@ public final class SignatureUpdateView extends LinearLayout implements MviView<I
                         : GONE);
         if (signatureAddResponse instanceof MobileIdResponse) {
             MobileIdResponse mobileIdResponse = (MobileIdResponse) signatureAddResponse;
-            GetMobileCreateSignatureStatusResponse.ProcessStatus mobileIdStatus =
-                    mobileIdResponse.status();
-            if (mobileIdStatus != null) {
-                mobileIdStatusView.setText(statusMessageSource.getMessage(mobileIdStatus));
-            } else {
-                mobileIdStatusView.setText(statusMessageSource.getInitialStatusMessage());
-            }
+            ProcessStatus mobileIdStatus = mobileIdResponse.status() == null
+                    ? ProcessStatus.DEFAULT
+                    : mobileIdResponse.status();
+            mobileIdStatusView.setText(
+                    MobileIdStatusMessages.message(getContext(), mobileIdStatus));
             String mobileIdChallenge = mobileIdResponse.challenge();
             if (mobileIdChallenge != null) {
                 mobileIdChallengeView.setText(mobileIdChallenge);
@@ -242,6 +241,16 @@ public final class SignatureUpdateView extends LinearLayout implements MviView<I
         return Observable.just(Intent.InitialIntent.create(isExistingContainer, containerFile,
                 signatureAddVisible ? DEFAULT_SIGN_METHOD : null,
                 signatureAddSuccessMessageVisible));
+    }
+
+    @SuppressWarnings("unchecked")
+    private Observable<Intent.NameUpdateIntent> nameUpdateIntent() {
+        return Observable.mergeArray(
+                adapter.nameUpdateClicks()
+                        .map(ignored -> Intent.NameUpdateIntent.show(containerFile)),
+                cancels(nameUpdateDialog).map(ignored -> Intent.NameUpdateIntent.clear()),
+                nameUpdateDialog.updates()
+                        .map(name -> Intent.NameUpdateIntent.update(containerFile, name)));
     }
 
     private Observable<Intent.DocumentsAddIntent> addDocumentsIntent() {
@@ -324,19 +333,24 @@ public final class SignatureUpdateView extends LinearLayout implements MviView<I
         documentRemoveConfirmationDialog.dismiss();
         errorDialog.setOnDismissListener(null);
         errorDialog.dismiss();
+        nameUpdateDialog.dismiss();
         super.onDetachedFromWindow();
     }
 
     @Override
     protected Parcelable onSaveInstanceState() {
-        return ViewSavedState.onSaveInstanceState(super.onSaveInstanceState(), parcel ->
-                parcel.writeBundle(signatureAddDialog.onSaveInstanceState()));
+        return ViewSavedState.onSaveInstanceState(super.onSaveInstanceState(), parcel -> {
+            parcel.writeBundle(signatureAddDialog.onSaveInstanceState());
+            parcel.writeBundle(nameUpdateDialog.onSaveInstanceState());
+        });
     }
 
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
-        super.onRestoreInstanceState(ViewSavedState.onRestoreInstanceState(state, parcel ->
-                signatureAddDialog.onRestoreInstanceState(
-                        parcel.readBundle(getClass().getClassLoader()))));
+        super.onRestoreInstanceState(ViewSavedState.onRestoreInstanceState(state, parcel -> {
+            signatureAddDialog.onRestoreInstanceState(
+                    parcel.readBundle(getClass().getClassLoader()));
+            nameUpdateDialog.onRestoreInstanceState(parcel.readBundle(getClass().getClassLoader()));
+        }));
     }
 }

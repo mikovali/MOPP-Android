@@ -1,6 +1,7 @@
 package ee.ria.mopplib.data;
 
 import android.support.annotation.Nullable;
+import android.util.Base64;
 import android.webkit.MimeTypeMap;
 
 import com.google.auto.value.AutoValue;
@@ -25,9 +26,12 @@ import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 import ee.ria.libdigidocpp.Container;
 import ee.ria.libdigidocpp.DataFiles;
+import ee.ria.libdigidocpp.Signature.Validator;
 import ee.ria.libdigidocpp.Signatures;
 import okio.ByteString;
 import timber.log.Timber;
@@ -78,12 +82,24 @@ public abstract class SignedContainer {
     public abstract ImmutableList<Signature> signatures();
 
     public final boolean signaturesValid() {
-        for (Signature signature : signatures()) {
-            if (!signature.status().equals(SignatureStatus.VALID)) {
+        for (int count : invalidSignatureCounts().values()) {
+            if (count > 0) {
                 return false;
             }
         }
         return true;
+    }
+
+    public final ImmutableMap<String, Integer> invalidSignatureCounts() {
+        Map<String, Integer> counts = new HashMap<>();
+        counts.put(SignatureStatus.UNKNOWN, 0);
+        counts.put(SignatureStatus.INVALID, 0);
+        for (Signature signature : signatures()) {
+            if (counts.containsKey(signature.status())) {
+                counts.put(signature.status(), counts.get(signature.status()) + 1);
+            }
+        }
+        return ImmutableMap.copyOf(counts);
     }
 
     public final String signatureProfile() {
@@ -179,6 +195,28 @@ public abstract class SignedContainer {
                 " in container " + file());
     }
 
+    public final String calculateDataFileDigest(DataFile dataFile, String method) throws
+            IOException {
+        Container container;
+        try {
+            container = Container.open(file().getAbsolutePath());
+        } catch (Exception e) {
+            throw new IOException(e.getMessage());
+        }
+        if (container == null) {
+            throw new IOException("Container.open returned null");
+        }
+        DataFiles dataFiles = container.dataFiles();
+        for (int i = 0; i < dataFiles.size(); i++) {
+            ee.ria.libdigidocpp.DataFile containerDataFile = dataFiles.get(i);
+            if (dataFile.name().equals(containerDataFile.fileName())) {
+                return Base64.encodeToString(containerDataFile.calcDigest(method), Base64.DEFAULT);
+            }
+        }
+        throw new IllegalArgumentException("Could not find file " + dataFile.name() +
+                " in container " + file());
+    }
+
     public final SignedContainer addAdEsSignature(byte[] adEsSignature) throws
             SignaturesLockedException, IOException {
         Container container;
@@ -221,8 +259,7 @@ public abstract class SignedContainer {
         return open(file());
     }
 
-    public final SignedContainer removeSignature(Signature signature) throws
-            SignaturesLockedException, IOException {
+    public final SignedContainer removeSignature(Signature signature) throws IOException {
         Container container;
         try {
             container = Container.open(file().getAbsolutePath());
@@ -349,22 +386,15 @@ public abstract class SignedContainer {
     }
 
     private static DataFile dataFile(ee.ria.libdigidocpp.DataFile dataFile) {
-        return DataFile.create(dataFile.id(), dataFile.fileName(), dataFile.fileSize());
+        return DataFile.create(dataFile.id(), dataFile.fileName(), dataFile.fileSize(),
+                dataFile.mediaType());
     }
 
     private static Signature signature(ee.ria.libdigidocpp.Signature signature) {
         String id = signature.id();
         String name = signatureName(signature);
         Instant createdAt = Instant.parse(signature.trustedSigningTime());
-        @SignatureStatus String status;
-        try {
-            signature.validate();
-            status = SignatureStatus.VALID;
-        } catch (Exception e) {
-            Timber.d(e, "Validation failed for signature {id: %s, name: %s, createdAt: %s}",
-                    id, name, createdAt);
-            status = SignatureStatus.INVALID;
-        }
+        @SignatureStatus String status = signatureStatus(signature);
         String profile = signature.profile();
         return Signature.create(id, name, createdAt, status, profile);
     }
@@ -409,6 +439,25 @@ public abstract class SignedContainer {
         return rdNs[0].getFirst().getValue().toString();
     }
 
+    @SignatureStatus private static String signatureStatus(
+            ee.ria.libdigidocpp.Signature signature) {
+        Validator validator = new Validator(signature);
+        int status = validator.status().swigValue();
+        validator.delete();
+
+        if (status == Validator.Status.Valid.swigValue()) {
+            return SignatureStatus.VALID;
+        } else if (status == Validator.Status.Warning.swigValue()) {
+            return SignatureStatus.WARNING;
+        } else if (status == Validator.Status.NonQSCD.swigValue()) {
+            return SignatureStatus.NON_QSCD;
+        } else if (status == Validator.Status.Invalid.swigValue()) {
+            return SignatureStatus.INVALID;
+        } else {
+            return SignatureStatus.UNKNOWN;
+        }
+    }
+
     /**
      * Get MIME type from file extension.
      *
@@ -428,7 +477,7 @@ public abstract class SignedContainer {
         int v1 = SignatureStatus.ORDER.get(o1.status());
         int v2 = SignatureStatus.ORDER.get(o2.status());
         if (v1 == v2) {
-            return 0;
+            return o1.createdAt().compareTo(o2.createdAt());
         }
         return v1 < v2 ? -1 : 1;
     };
